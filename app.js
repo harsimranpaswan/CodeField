@@ -27,6 +27,13 @@ mongoose.connect(dbUrl, {
     //useFindAndModify: false,
 });
 const db = mongoose.connection;
+db.on("connected", () => {
+    console.log("Mongoose successfully connected");
+});
+db.on("disconnected", () => {
+    console.log("Mongoose disconnected");
+});
+
 db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", () => {
     console.log("Database connected");
@@ -44,8 +51,12 @@ const secret = process.env.SECRET || 'thisshouldbeabettersecret!';
 const store = MongoDBStore.create({
     mongoUrl: dbUrl,
     secret,
-    touchAfter: 24 * 60 * 60
+    touchAfter: 24 * 60 * 60,  // 1 day
+    crypto: {
+        secret: 'squirrel' // Define a secret for the store if needed
+    }
 });
+
 
 store.on("error", function (e) {
     console.log("SESSION STORE ERROR", e)
