@@ -222,7 +222,7 @@ app.post("/discussions/:id/comments", isLoggedIn, async function (req, res) {
 
 
 //=============================================
-//comment delet and edit route
+//comment delete and edit route
 //=============================================
 //comment form display
 app.get("/discussions/:id/comments/:comment_id/edit", checkCommentOwnership, async function (req, res) {
@@ -246,7 +246,7 @@ app.put("/discussions/:id/comments/:comment_id", checkCommentOwnership, async fu
         }
     });
 });
-//comment delet
+//comment delete
 app.delete("/discussions/:id/comments/:comment_id", checkCommentOwnership, async function (req, res) {
     //find by id and remove
     await comment.findByIdAndRemove(req.params.comment_id, function (err) {
